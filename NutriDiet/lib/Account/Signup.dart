@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nutridiet/Account/SetupWizard.dart';
 import 'package:nutridiet/BusinessLogic/Firebase.dart';
 
 import '../Home/Home.dart';
@@ -93,8 +94,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.image_outlined, size: 72,),
-              SizedBox(height: 20,),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.arrow_back_ios),
+                  ),
+                  Spacer(),
+                ],
+              ),
+              Container(
+                height: 125,
+                width: 125,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(image: AssetImage('assets/logo.jpg'), fit: BoxFit.fill),
+                ),
+              ),
+              SizedBox(height: 10,),
               Text("Register", style: TextStyle(fontSize: 24, color: Color(0xff454B60), fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
               Text(message,
@@ -110,14 +129,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               SizedBox(height: 30,),
-              CustomTextBox(name, "Name", nameErrorController, nameError),
-              SizedBox(height: 10,),
-              CustomTextBox(email, "Email", emailErrorController, emailError),
-              SizedBox(height: 10,),
-              CustomTextBox(password, "Password", passErrorController, passError),
-              SizedBox(height: 10,),
-              CustomTextBox(cpassword, "Confirm Password", cpassErrorController, cpassError),
-              SizedBox(height: 10,),
+              CustomTextBox(name, "Name", nameErrorController, nameError, false),
+              SizedBox(height: 5,),
+              CustomTextBox(email, "Email", emailErrorController, emailError, false),
+              SizedBox(height: 5,),
+              CustomTextBox(password, "Password", passErrorController, passError, true),
+              SizedBox(height: 5,),
+              CustomTextBox(cpassword, "Confirm Password", cpassErrorController, cpassError, true),
               Row(
                 children: [
                   Checkbox(
@@ -133,13 +151,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text("I agree with the terms and conditions", style: !checkboxErrorController ? TextStyle(fontSize: 14, color: Color(0xff454B60), fontWeight: FontWeight.bold) : TextStyle(fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),),
                 ],
               ),
-              SizedBox(height: 30,),
+              SizedBox(height: 10,),
+              Spacer(),
               InkWell(
                 onTap: () async {
                   if (checkAllFieldsFull()) {
-                    if (password.text.length < 6) {
+                    if (password.text.length < 8) {
                       passErrorController = true;
-                      passError = "Password must be 6 characters";
+                      passError = "Password must be 8 characters";
                     }
                     else if (password.text != cpassword.text) {
                       cpassErrorController = true;
@@ -156,11 +175,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       print(otherMessage);
 
                       if (responseMessage! == "success") {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => SetupWizard()), (route) => false);
                       }
                       else {
                         setState(() {
-                          message = "Error: $responseMessage";
+                          message = "Invalid Email/Password";
                           working = false;
                           error = true;
                         });
@@ -186,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  CustomTextBox(TextEditingController recontroller, String hintText, bool errorController, String errorMessage) {
+  CustomTextBox(TextEditingController recontroller, String hintText, bool errorController, String errorMessage, bool maskText) {
     return Column(
       children: [
         Container(
@@ -200,6 +219,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           child: Center(
             child: TextField(
+              obscureText: maskText,
+              enableSuggestions: !maskText,
+              autocorrect: !maskText,
               controller: recontroller,
               style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
               decoration: new InputDecoration.collapsed(

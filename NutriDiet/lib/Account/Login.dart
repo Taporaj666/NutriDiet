@@ -37,8 +37,15 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Icons.image_outlined, size: 72,),
-              SizedBox(height: 20,),
+              Container(
+                height: 125,
+                width: 125,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(image: AssetImage('assets/logo.jpg'), fit: BoxFit.fill),
+                ),
+              ),
+              SizedBox(height: 50,),
               Text("Login", style: TextStyle(fontSize: 24, color: Color(0xff454B60), fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
               Text(message.text,
@@ -54,9 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(height: 30,),
-              CustomTextBox(username, "Email"),
+              CustomTextBox(username, "Email", false),
               SizedBox(height: 10,),
-              CustomTextBox(password, "Password"),
+              CustomTextBox(password, "Password", true),
               SizedBox(height: 10,),
               InkWell(
                 onTap: () async {
@@ -92,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           working = false;
                           error = true;
-                          message.text = "Error: ${returnMessage!}";
+                          message.text = "Invalid Email/Password";
                         });
                       }
                     }
@@ -142,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  CustomTextBox(TextEditingController recontroller, String hintText) {
+  CustomTextBox(TextEditingController recontroller, String hintText, bool isPassword) {
     return Column(
       children: [
         Container(
@@ -156,6 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           child: Center(
             child: TextField(
+              obscureText: isPassword,
+              enableSuggestions: !isPassword,
+              autocorrect: !isPassword,
               controller: recontroller,
               style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
               decoration: new InputDecoration.collapsed(
@@ -165,17 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        SizedBox(height: 5,),
-        Row(
-          children: [
-            Spacer(), GestureDetector(
-              onTap: () {
-
-              },
-              child: Text("Forgot Password?", style: TextStyle(fontSize: 14, color: Color(0xff454B60)),)
-            ),
-          ],
-        )
+        SizedBox(height: 15,),
       ],
     );
   }
