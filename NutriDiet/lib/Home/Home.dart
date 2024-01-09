@@ -2,6 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nutridiet/Account/Login.dart';
 import 'package:nutridiet/BusinessLogic/Firebase.dart';
+import 'package:nutridiet/Home/SubPages/Kitchen.dart';
+import 'package:nutridiet/Home/SubPages/Profile.dart';
+import 'package:nutridiet/Home/SubPages/Recipe.dart';
+
+import 'SubPages/AddRecipe.dart';
+import 'SubPages/Search.dart';
+import 'SubPages/Shopping.dart';
+import 'SubPages/SubHome.dart';
+
+final GlobalKey<ScaffoldState> customKey = GlobalKey();
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,43 +22,69 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  bool working = false;
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(50),
-            child: Column(
-              children: [
-                Spacer(),
-                Text("You are logged in as ${FirebaseManager.user?.displayName}!"),
-                SizedBox(height: 50,),
-                GestureDetector(
-                  onTap: () async {
-                    setState(() {
-                      working = true;
-                    });
-                    await FirebaseManager.logoutAccount();
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                        color: Color(0xff454B60),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Center(
-                      child: !working? Text("Logout", style: TextStyle(fontSize: 14, color: Colors.white),) : SizedBox(height: 18, width: 18, child: CircularProgressIndicator(color: Colors.white,)),
-                    ),
-                  ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          key: customKey,
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xff0F1B2E)),
+              color: Color(0xff454B60)
+            ),
+            child: BottomNavigationBar(
+              showUnselectedLabels: true,
+              enableFeedback: false,
+              selectedItemColor: Color(0xff70B5FF),
+              unselectedItemColor: Colors.grey,
+              backgroundColor: Colors.transparent,
+              currentIndex: _currentIndex,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+              items: [
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.home_outlined),
+                  label: 'Home',
                 ),
-                Spacer(),
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.search),
+                  label: 'Search',
+                ),
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.cookie_outlined),
+                  label: 'Kitchen',
+                ),
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.person_outlined),
+                  label: 'Profile',
+                ),
               ],
             ),
-          )
+          ),
+          body: Material(
+            child: IndexedStack(index: _currentIndex, children: <Widget>[
+              Visibility(visible: _currentIndex == 0,
+                  child: subHome()
+              ),
+              Visibility(visible: _currentIndex == 1,
+                  // child: searchPage()
+                  child: Shopping()
+              ),
+              Visibility(visible: _currentIndex == 2,
+                  child: Kitchen()
+              ),
+              Visibility(visible: _currentIndex == 3,
+                  child: Profile()
+              ),
+            ]),
+          ),
         ),
       ),
     );

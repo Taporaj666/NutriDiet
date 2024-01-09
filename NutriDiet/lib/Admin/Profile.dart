@@ -7,14 +7,14 @@ import '../../Account/Login.dart';
 import '../../Account/SetupWizard.dart';
 import '../../BusinessLogic/Firebase.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class AdminProfile extends StatefulWidget {
+  const AdminProfile({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<AdminProfile> createState() => _ProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileState extends State<AdminProfile> {
 
   TextEditingController genderController = new TextEditingController();
   TextEditingController ageController = new TextEditingController();
@@ -77,7 +77,7 @@ class _ProfileState extends State<Profile> {
                       height: 100,
                       width: 100,
                       decoration: BoxDecoration(
-                        color: Color(0xffE8EAF2),
+                          color: Color(0xffE8EAF2),
                           border: Border.all(color: Color(0xff454B60)),
                           borderRadius: BorderRadius.circular(100)
                       ),
@@ -119,19 +119,19 @@ class _ProfileState extends State<Profile> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                      decoration: BoxDecoration(
+                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                        decoration: BoxDecoration(
                           // color: Colors.white,
-                          border: Border.all(color: Color(0xff454B60)),
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Row(
-                        children: [
-                          Text("Terms and Conditions", style: TextStyle(fontSize: 16, color: Colors.blueGrey),),
-                          Spacer(),
-                          Icon(Icons.open_in_new, color: Colors.blueGrey),
-                        ],
-                      )
+                            border: Border.all(color: Color(0xff454B60)),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: Row(
+                          children: [
+                            Text("Terms and Conditions", style: TextStyle(fontSize: 16, color: Colors.blueGrey),),
+                            Spacer(),
+                            Icon(Icons.open_in_new, color: Colors.blueGrey),
+                          ],
+                        )
                     ),
                   ),
                 ),
@@ -169,7 +169,7 @@ class _ProfileState extends State<Profile> {
     return Row(
       children: [
         SizedBox(
-          width: 100,
+            width: 100,
             child: Text("$title:", style: TextStyle(fontSize: 16, color: Color(0xff454B60)),)
         ),
         SizedBox(width: 20,),
