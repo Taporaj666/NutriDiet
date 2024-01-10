@@ -69,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     else {
       cpassErrorController = false;
     }
-    if (isChecked == false) {
+    if (isChecked = false) {
       checkboxErrorController = true;
       trigger = true;
     }
@@ -88,120 +88,117 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Material(
       color: Colors.white,
       child: SafeArea(
-        child: Scaffold(
-          resizeToAvoidBottomInset: true,
-          body: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(Icons.arrow_back_ios),
-                    ),
-                    Spacer(),
-                  ],
-                ),
-                Container(
-                  height: 125,
-                  width: 125,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    image: DecorationImage(image: AssetImage('assets/logo.jpg'), fit: BoxFit.fill),
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.arrow_back_ios),
                   ),
+                  Spacer(),
+                ],
+              ),
+              Container(
+                height: 125,
+                width: 125,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(image: AssetImage('assets/logo.jpg'), fit: BoxFit.fill),
                 ),
-                SizedBox(height: 10,),
-                Text("Register", style: TextStyle(fontSize: 24, color: Color(0xff454B60), fontWeight: FontWeight.bold),),
-                SizedBox(height: 10,),
-                Text(message,
-                  textAlign: TextAlign.center,
-                  style: error ? TextStyle(
-                      color: Colors.red,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold
-                  ) : TextStyle(
-                      color: Color(0xff454B60),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold
+              ),
+              SizedBox(height: 10,),
+              Text("Register", style: TextStyle(fontSize: 24, color: Color(0xff454B60), fontWeight: FontWeight.bold),),
+              SizedBox(height: 10,),
+              Text(message,
+                textAlign: TextAlign.center,
+                style: error ? TextStyle(
+                    color: Colors.red,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold
+                ) : TextStyle(
+                    color: Color(0xff454B60),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              SizedBox(height: 30,),
+              CustomTextBox(name, "Name", nameErrorController, nameError, false),
+              SizedBox(height: 5,),
+              CustomTextBox(email, "Email", emailErrorController, emailError, false),
+              SizedBox(height: 5,),
+              CustomTextBox(password, "Password", passErrorController, passError, true),
+              SizedBox(height: 5,),
+              CustomTextBox(cpassword, "Confirm Password", cpassErrorController, cpassError, true),
+              Row(
+                children: [
+                  Checkbox(
+                    isError: true,
+                    value: isChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        isChecked = value!;
+                      });
+                    },
                   ),
-                ),
-                SizedBox(height: 30,),
-                CustomTextBox(name, "Name", nameErrorController, nameError, false),
-                SizedBox(height: 5,),
-                CustomTextBox(email, "Email", emailErrorController, emailError, false),
-                SizedBox(height: 5,),
-                CustomTextBox(password, "Password", passErrorController, passError, true),
-                SizedBox(height: 5,),
-                CustomTextBox(cpassword, "Confirm Password", cpassErrorController, cpassError, true),
-                Row(
-                  children: [
-                    Checkbox(
-                      isError: true,
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    SizedBox(width: 10,),
-                    Text("I agree with the terms and conditions", style: !checkboxErrorController ? TextStyle(fontSize: 14, color: Color(0xff454B60), fontWeight: FontWeight.bold) : TextStyle(fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Spacer(),
-                InkWell(
-                  onTap: () async {
-                    if (checkAllFieldsFull()) {
-                      if (password.text.length < 8) {
-                        passErrorController = true;
-                        passError = "Password must be 8 characters";
-                      }
-                      else if (password.text != cpassword.text) {
-                        cpassErrorController = true;
-                        cpassError = "Passwords do not match";
+                  SizedBox(width: 10,),
+                  Text("I agree with the terms and conditions", style: !checkboxErrorController ? TextStyle(fontSize: 14, color: Color(0xff454B60), fontWeight: FontWeight.bold) : TextStyle(fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),),
+                ],
+              ),
+              SizedBox(height: 10,),
+              Spacer(),
+              InkWell(
+                onTap: () async {
+                  if (checkAllFieldsFull()) {
+                    if (password.text.length < 8) {
+                      passErrorController = true;
+                      passError = "Password must be 8 characters";
+                    }
+                    else if (password.text != cpassword.text) {
+                      cpassErrorController = true;
+                      cpassError = "Passwords do not match";
+                    }
+                    else {
+                      setState(() {
+                        working = true;
+                      });
+                      String? responseMessage = await FirebaseManager.createAccountWithEmailPassword(email.text, password.text);
+                      String? otherMessage = await FirebaseManager.assignNameToAccount(name.text);
+
+                      print(responseMessage);
+                      print(otherMessage);
+
+                      if (responseMessage! == "success") {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => SetupWizard()), (route) => false);
                       }
                       else {
                         setState(() {
-                          working = true;
+                          message = "Invalid Email/Password";
+                          working = false;
+                          error = true;
                         });
-                        String? responseMessage = await FirebaseManager.createAccountWithEmailPassword(email.text, password.text);
-                        String? otherMessage = await FirebaseManager.assignNameToAccount(name.text);
-
-                        print(responseMessage);
-                        print(otherMessage);
-
-                        if (responseMessage! == "success") {
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => SetupWizard()), (route) => false);
-                        }
-                        else {
-                          setState(() {
-                            message = "Invalid Email/Password";
-                            working = false;
-                            error = true;
-                          });
-                        }
                       }
                     }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                        color: Color(0xff454B60),
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Center(
-                      child: !working? Text("Next", style: TextStyle(fontSize: 14, color: Colors.white),) : SizedBox(height: 18, width: 18, child: CircularProgressIndicator(color: Colors.white,)),
-                    ),
+                  }
+                },
+                child: Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                      color: Color(0xff454B60),
+                      borderRadius: BorderRadius.circular(15)
+                  ),
+                  child: Center(
+                    child: !working? Text("Next", style: TextStyle(fontSize: 14, color: Colors.white),) : SizedBox(height: 18, width: 18, child: CircularProgressIndicator(color: Colors.white,)),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
