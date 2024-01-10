@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/Material.dart';
 import 'package:nutridiet/BusinessLogic/FireStore.dart';
+import 'package:nutridiet/Home/SubPages/TermsConditions.dart';
 
 import '../../Account/Login.dart';
+import '../../Account/SetupWizard.dart';
 import '../../BusinessLogic/Firebase.dart';
 
 class Profile extends StatefulWidget {
@@ -30,11 +33,18 @@ class _ProfileState extends State<Profile> {
   }
 
   loadData() async {
-    List<String> userData = await nutriBase.getUserData();
-    genderController.text = userData[0];
-    ageController.text = userData[3];
-    heightController.text = userData[2];
-    weightController.text = userData[1];
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> userData = await nutriBase.getUserData();
+    print(userData.toString());
+    if (userData.length == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SetupWizard()),
+      );
+    }
+    genderController.text = userData[0].data()["gender"].toString();
+    ageController.text = userData[0].data()["age"].toString();
+    heightController.text = userData[0].data()["height"].toString();
+    weightController.text = userData[0].data()["weight"].toString();
   }
 
   @override
@@ -95,6 +105,36 @@ class _ProfileState extends State<Profile> {
                 editField("Height", heightController, true),
                 SizedBox(height: 10,),
                 editField("Weight", weightController, true),
+              ],
+            ),
+            SizedBox(height: 40,),
+            Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TermsConditions()),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      decoration: BoxDecoration(
+                          // color: Colors.white,
+                          border: Border.all(color: Color(0xff454B60)),
+                          borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Row(
+                        children: [
+                          Text("Terms and Conditions", style: TextStyle(fontSize: 16, color: Colors.blueGrey),),
+                          Spacer(),
+                          Icon(Icons.open_in_new, color: Colors.blueGrey),
+                        ],
+                      )
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 40,),
