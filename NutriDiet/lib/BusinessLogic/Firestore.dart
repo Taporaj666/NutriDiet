@@ -6,7 +6,7 @@ import 'Firebase.dart';
 class nutriBase {
 
   static addRecipe(String name, String ingredients, String method, String image, String calories) async {
-    if (name.isEmpty && ingredients.isEmpty && method.isEmpty && image.isEmpty) {
+    if (name.isEmpty || ingredients.isEmpty || method.isEmpty || image.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please fill all fields",
       );
@@ -61,17 +61,9 @@ class nutriBase {
     return;
   }
 
-  static getUserData() async {
-    List<String> userData = [];
-
+  static Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getUserData() async {
     var rawData = await FirebaseFirestore.instance.collection('users').where('userID', isEqualTo: FirebaseManager.user!.uid!).get();
-
-    userData.add(rawData.docs[0].data()["gender"].toString(),);
-    userData.add(rawData.docs[0].data()["weight"].toString(),);
-    userData.add(rawData.docs[0].data()["height"].toString(),);
-    userData.add(rawData.docs[0].data()["age"].toString(),);
-
-    return userData;
+    return rawData.docs;
   }
 
   static Future<List<List<dynamic>>> getRecipes() async {
