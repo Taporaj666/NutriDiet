@@ -8,6 +8,7 @@ import 'package:nutridiet/Home/SubPages/Recipe.dart';
 
 import 'SubPages/AddRecipe.dart';
 import 'SubPages/Search.dart';
+import 'SubPages/Shopping.dart';
 import 'SubPages/SubHome.dart';
 
 final GlobalKey<ScaffoldState> customKey = GlobalKey();
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: new Icon(Icons.screen_search_desktop_outlined),
+                  icon: new Icon(Icons.search),
                   label: 'Search',
                 ),
                 BottomNavigationBarItem(
@@ -73,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: subHome()
               ),
               Visibility(visible: _currentIndex == 1,
-                  child: searchPage()
+                  // child: searchPage()
+                  child: Shopping()
               ),
               Visibility(visible: _currentIndex == 2,
                   child: Kitchen()
