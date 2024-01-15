@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutridiet/Account/Signup.dart';
 import 'package:nutridiet/BusinessLogic/Firebase.dart';
-import 'package:nutridiet/checker.dart';
+import 'package:nutridiet/Home/Home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -92,14 +92,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           error = false;
                           message.text = "Login Success";
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => checker()), (route) => false);
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
                         });
                       }
                       else {
                         setState(() {
                           working = false;
                           error = true;
-                          message.text = "Invalid Email/Password";
+                          message.text = "Error: ${returnMessage!}";
                         });
                       }
                     }
@@ -175,7 +175,17 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        SizedBox(height: 15,),
+        SizedBox(height: 5,),
+        Row(
+          children: [
+            Spacer(), GestureDetector(
+              onTap: () {
+
+              },
+              child: Text("Forgot Password?", style: TextStyle(fontSize: 14, color: Color(0xff454B60)),)
+            ),
+          ],
+        )
       ],
     );
   }
