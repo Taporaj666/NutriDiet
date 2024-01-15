@@ -1,8 +1,6 @@
 import 'package:flutter/Material.dart';
-import 'package:nutridiet/Account/SetupPart2.dart';
 import 'package:nutridiet/BusinessLogic/FireStore.dart';
 
-import '../BusinessLogic/Firebase.dart';
 import '../Home/Home.dart';
 
 class SetupWizard extends StatefulWidget {
@@ -14,20 +12,10 @@ class SetupWizard extends StatefulWidget {
 
 class _SetupWizardState extends State<SetupWizard> {
 
-  bool genderController = true;
-
-  TextEditingController nameController = new TextEditingController();
-  TextEditingController emailController = new TextEditingController();
+  TextEditingController genderController = new TextEditingController();
   TextEditingController heightController = new TextEditingController();
   TextEditingController ageController = new TextEditingController();
   TextEditingController weightController = new TextEditingController();
-
-  @override void initState() {
-    // TODO: implement initState
-    super.initState();
-    nameController.text = FirebaseManager.user!.displayName!;
-    emailController.text = FirebaseManager.user!.email!;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,63 +33,18 @@ class _SetupWizardState extends State<SetupWizard> {
                 ],
               ),
               SizedBox(height: 40,),
-              inputBox("Name", nameController, "E.g Dave", true),
+              inputBox("Gender", genderController, "Male/Female", 1, false),
               SizedBox(height: 20,),
-              inputBox("Email", emailController, "E.g. Dave@website.com", true),
+              inputBox("Height", heightController, "5'8", 5, true),
               SizedBox(height: 20,),
-              Row(
-                children: [
-                  Text("Gender", style: TextStyle(fontSize: 16, color: Color(0xff454B60)),),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () async {
-                      setState(() {
-                        genderController = true;
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      decoration: BoxDecoration(
-                          color: genderController ? Color(0xff454B60) : Colors.white,
-                          border: Border.all(color: Color(0xff454B60)),
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Center(child: Text("Male", style: TextStyle(fontSize: 16, color: genderController ? Colors.white : Color(0xff454B60)),)),
-                    ),
-                  ),
-                  SizedBox(width: 20,),
-                  GestureDetector(
-                    onTap: () async {
-                      setState(() {
-                        genderController = false;
-                      });
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      decoration: BoxDecoration(
-                          color: !genderController ? Color(0xff454B60) : Colors.white,
-                          border: Border.all(color: Color(0xff454B60)),
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Center(child: Text("Female", style: TextStyle(fontSize: 16, color: !genderController ? Colors.white : Color(0xff454B60)),)),
-                    ),
-                  )
-                ],
-              ),
+              inputBox("Weight", weightController, "85 Kg", 10, true),
               SizedBox(height: 20,),
-              secondInputBox("Height", "Meters", heightController),
-              SizedBox(height: 20,),
-              secondInputBox("Weight", "Kgs", weightController),
-              SizedBox(height: 20,),
-              secondInputBox("Age", "Years", ageController),
-              SizedBox(height: 60,),
+              inputBox("Age", ageController, "21", 1, true),
+              SizedBox(height: 40,),
               GestureDetector(
                 onTap: () async {
-                  // await nutriBase.addUser(genderController? "Male" : "Female", heightController.text, weightController.text, ageController.text);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SetupWizard2(age: ageController.text, height: heightController.text, weight: weightController.text, gender: genderController? "Male" : "Female",)),
-                  );
+                  await nutriBase.addUser(genderController.text, heightController.text, weightController.text, ageController.text);
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
@@ -110,7 +53,7 @@ class _SetupWizardState extends State<SetupWizard> {
                       border: Border.all(color: Color(0xff454B60)),
                       borderRadius: BorderRadius.circular(5)
                   ),
-                  child: Center(child: Text("Next", style: TextStyle(fontSize: 16, color: Colors.white),)),
+                  child: Center(child: Text("Submit", style: TextStyle(fontSize: 16, color: Colors.white),)),
                 ),
               )
             ],
@@ -120,7 +63,7 @@ class _SetupWizardState extends State<SetupWizard> {
     );
   }
 
-  inputBox(String title, TextEditingController tempController, String hintText, bool rOnly) {
+  inputBox(String title, TextEditingController tempController, String hintText, int maxLines, bool kbType) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -129,7 +72,7 @@ class _SetupWizardState extends State<SetupWizard> {
         Container(
           padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
-              color: rOnly ? Color(0xffE8EAF2) : Colors.white,
+              color: Color(0xffE8EAF2),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                   color: Color(0xffBFC2CD),
@@ -137,8 +80,8 @@ class _SetupWizardState extends State<SetupWizard> {
               )
           ),
           child: TextField(
-            readOnly: rOnly,
-            maxLines: 1,
+            keyboardType: kbType ? TextInputType.numberWithOptions() : TextInputType.text,
+            maxLines: maxLines,
             obscureText: false,
             enableSuggestions: true,
             autocorrect: true,
@@ -146,38 +89,9 @@ class _SetupWizardState extends State<SetupWizard> {
             style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
             decoration: new InputDecoration.collapsed(
               hintText: hintText,
-              hintStyle: TextStyle(fontSize: 14, color: rOnly ? Colors.blueGrey[300] : Colors.grey),
+              hintStyle: TextStyle(fontSize: 14, color: Colors.blueGrey[300]),
             ),
           ),
-        ),
-      ],
-    );
-  }
-
-  secondInputBox(String title, String units, TextEditingController tempController) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 100,
-            child: Text(title, style: TextStyle(fontSize: 16, color: Color(0xff454B60)),)
-        ),
-        SizedBox(width: 20,),
-        Expanded(
-          child: TextField(
-            obscureText: false,
-            enableSuggestions: true,
-            autocorrect: true,
-            controller: tempController,
-            style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
-            // decoration: new InputDecoration.collapsed(
-            //   hintText: hintText,
-            //   hintStyle: TextStyle(fontSize: 14, color: rOnly ? Colors.blueGrey[300] : Colors.grey),
-            // ),
-          ),
-        ),
-        SizedBox(
-            width: 100,
-            child: Text(units, style: TextStyle(fontSize: 16, color: Color(0xff454B60)), textAlign: TextAlign.right,)
         ),
       ],
     );
