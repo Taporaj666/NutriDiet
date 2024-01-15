@@ -44,7 +44,7 @@ class _RecipeState extends State<Recipe> {
               color: Color(0xffE8EAF2),
               border: Border.all(color: Color(0xffBFC2CD)),
               image: DecorationImage(
-                image: NetworkImage("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn3.tmbi.com%2Fsecure%2FRMS%2Fattachments%2F37%2F1200x1200%2Fexps87236_THCA163696B12_15_3b.jpg&f=1&nofb=1&ipt=de84740a5655da4c28ca93120feba70c11fad2d491fecabe721a789d5518d536&ipo=images"), fit: BoxFit.cover,
+                image: NetworkImage(widget.image), fit: BoxFit.cover,
               ),
             ),
           ),
