@@ -50,55 +50,55 @@ class _KitchenState extends State<Kitchen> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xff454B60)),
-                    borderRadius: BorderRadius.circular(15)
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          obscureText: false,
-                          enableSuggestions: true,
-                          autocorrect: true,
-                          controller: inputController,
-                          style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
-                          decoration: new InputDecoration.collapsed(
-                            hintText: "Search",
-                            hintStyle: TextStyle(fontSize: 14, color: Color(0xff454B60)),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                          onTap: () async {
-
-                          },
-                          child: Icon(Icons.search, color: Color(0xff454B60),)
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(width: 20,),
-              GestureDetector(
-                  onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => addRecipe()),
-                    );
-                  },
-                  child: Icon(Icons.add_box_rounded, color: Color(0xff454B60), size: 72,)
-              ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.all(20),
+        //   child: Row(
+        //     children: [
+        //       Expanded(
+        //         child: Container(
+        //           padding: EdgeInsets.all(15),
+        //           decoration: BoxDecoration(
+        //             border: Border.all(color: Color(0xff454B60)),
+        //             borderRadius: BorderRadius.circular(15)
+        //           ),
+        //           child: Row(
+        //             children: [
+        //               Expanded(
+        //                 child: TextField(
+        //                   obscureText: false,
+        //                   enableSuggestions: true,
+        //                   autocorrect: true,
+        //                   controller: inputController,
+        //                   style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
+        //                   decoration: new InputDecoration.collapsed(
+        //                     hintText: "Search",
+        //                     hintStyle: TextStyle(fontSize: 14, color: Color(0xff454B60)),
+        //                   ),
+        //                 ),
+        //               ),
+        //               GestureDetector(
+        //                   onTap: () async {
+        //
+        //                   },
+        //                   child: Icon(Icons.search, color: Color(0xff454B60),)
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ),
+        //       SizedBox(width: 20,),
+        //       GestureDetector(
+        //           onTap: () async {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(builder: (context) => addRecipe()),
+        //             );
+        //           },
+        //           child: Icon(Icons.add_box_rounded, color: Color(0xff454B60), size: 72,)
+        //       ),
+        //     ],
+        //   ),
+        // ),
         isLoaded ? Expanded(
           child: ListView.builder(
               padding: const EdgeInsets.all(20),
@@ -121,26 +121,28 @@ class _KitchenState extends State<Kitchen> {
                     // height: 50,
                     child: Row(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(food[index][1],
-                              style: TextStyle(
-                                color: Color(0xff3D4048),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(food[index][1],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Color(0xff3D4048),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400
+                                ),
                               ),
-                            ),
-                            Text(food[index][2],
-                              style: TextStyle(
-                                  color: Color(0xff3D4048),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w800
-                              ),
-                            )
-                          ],
+                              Text("${food[index][2]} kCal",
+                                style: TextStyle(
+                                    color: Color(0xff3D4048),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                        Spacer(),
                         Container(
                           height: 100,
                           width: 100,
