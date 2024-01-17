@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=G:\Flutter Versions\flutter 3.10.6
-FLUTTER_APPLICATION_PATH=F:\Active\Flutter\nutridiet
+FLUTTER_ROOT=G:\Flutter Versions\flutter_3.16.5
+FLUTTER_APPLICATION_PATH=F:\Github\nutridiet
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib\main.dart
 FLUTTER_BUILD_DIR=build
