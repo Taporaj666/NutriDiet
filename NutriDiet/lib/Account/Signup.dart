@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nutridiet/Account/SetupWizard.dart';
 import 'package:nutridiet/BusinessLogic/Firebase.dart';
 
 import '../Home/Home.dart';
@@ -113,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   image: DecorationImage(image: AssetImage('assets/logo.jpg'), fit: BoxFit.fill),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 50,),
               Text("Register", style: TextStyle(fontSize: 24, color: Color(0xff454B60), fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
               Text(message,
@@ -130,12 +129,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: 30,),
               CustomTextBox(name, "Name", nameErrorController, nameError, false),
-              SizedBox(height: 5,),
+              SizedBox(height: 10,),
               CustomTextBox(email, "Email", emailErrorController, emailError, false),
-              SizedBox(height: 5,),
+              SizedBox(height: 10,),
               CustomTextBox(password, "Password", passErrorController, passError, true),
-              SizedBox(height: 5,),
+              SizedBox(height: 10,),
               CustomTextBox(cpassword, "Confirm Password", cpassErrorController, cpassError, true),
+              SizedBox(height: 10,),
               Row(
                 children: [
                   Checkbox(
@@ -151,8 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text("I agree with the terms and conditions", style: !checkboxErrorController ? TextStyle(fontSize: 14, color: Color(0xff454B60), fontWeight: FontWeight.bold) : TextStyle(fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),),
                 ],
               ),
-              SizedBox(height: 10,),
-              Spacer(),
+              SizedBox(height: 30,),
               InkWell(
                 onTap: () async {
                   if (checkAllFieldsFull()) {
@@ -175,11 +174,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       print(otherMessage);
 
                       if (responseMessage! == "success") {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => SetupWizard()), (route) => false);
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
                       }
                       else {
                         setState(() {
-                          message = "Invalid Email/Password";
+                          message = "Error: $responseMessage";
                           working = false;
                           error = true;
                         });
