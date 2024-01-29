@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/Material.dart';
 import 'package:nutridiet/BusinessLogic/FireStore.dart';
 
 import '../../Account/Login.dart';
+import '../../Account/SetupWizard.dart';
 import '../../BusinessLogic/Firebase.dart';
 
 class Profile extends StatefulWidget {
@@ -30,11 +32,18 @@ class _ProfileState extends State<Profile> {
   }
 
   loadData() async {
-    List<String> userData = await nutriBase.getUserData();
-    genderController.text = userData[0];
-    ageController.text = userData[3];
-    heightController.text = userData[2];
-    weightController.text = userData[1];
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> userData = await nutriBase.getUserData();
+    print(userData.toString());
+    if (userData.length == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SetupWizard()),
+      );
+    }
+    genderController.text = userData[0].data()["gender"].toString();
+    ageController.text = userData[0].data()["age"].toString();
+    heightController.text = userData[0].data()["height"].toString();
+    weightController.text = userData[0].data()["weight"].toString();
   }
 
   @override
