@@ -50,55 +50,55 @@ class _KitchenState extends State<Kitchen> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xff454B60)),
-                    borderRadius: BorderRadius.circular(15)
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          obscureText: false,
-                          enableSuggestions: true,
-                          autocorrect: true,
-                          controller: inputController,
-                          style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
-                          decoration: new InputDecoration.collapsed(
-                            hintText: "Search",
-                            hintStyle: TextStyle(fontSize: 14, color: Color(0xff454B60)),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                          onTap: () async {
-
-                          },
-                          child: Icon(Icons.search, color: Color(0xff454B60),)
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(width: 20,),
-              GestureDetector(
-                  onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => addRecipe()),
-                    );
-                  },
-                  child: Icon(Icons.add_box_rounded, color: Color(0xff454B60), size: 72,)
-              ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.all(20),
+        //   child: Row(
+        //     children: [
+        //       Expanded(
+        //         child: Container(
+        //           padding: EdgeInsets.all(15),
+        //           decoration: BoxDecoration(
+        //             border: Border.all(color: Color(0xff454B60)),
+        //             borderRadius: BorderRadius.circular(15)
+        //           ),
+        //           child: Row(
+        //             children: [
+        //               Expanded(
+        //                 child: TextField(
+        //                   obscureText: false,
+        //                   enableSuggestions: true,
+        //                   autocorrect: true,
+        //                   controller: inputController,
+        //                   style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
+        //                   decoration: new InputDecoration.collapsed(
+        //                     hintText: "Search",
+        //                     hintStyle: TextStyle(fontSize: 14, color: Color(0xff454B60)),
+        //                   ),
+        //                 ),
+        //               ),
+        //               GestureDetector(
+        //                   onTap: () async {
+        //
+        //                   },
+        //                   child: Icon(Icons.search, color: Color(0xff454B60),)
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ),
+        //       SizedBox(width: 20,),
+        //       GestureDetector(
+        //           onTap: () async {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(builder: (context) => addRecipe()),
+        //             );
+        //           },
+        //           child: Icon(Icons.add_box_rounded, color: Color(0xff454B60), size: 72,)
+        //       ),
+        //     ],
+        //   ),
+        // ),
         isLoaded ? Expanded(
           child: ListView.builder(
               padding: const EdgeInsets.all(20),

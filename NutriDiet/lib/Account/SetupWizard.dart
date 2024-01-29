@@ -1,4 +1,5 @@
 import 'package:flutter/Material.dart';
+import 'package:nutridiet/Account/SetupPart2.dart';
 import 'package:nutridiet/BusinessLogic/FireStore.dart';
 
 import '../BusinessLogic/Firebase.dart';
@@ -96,8 +97,11 @@ class _SetupWizardState extends State<SetupWizard> {
               SizedBox(height: 60,),
               GestureDetector(
                 onTap: () async {
-                  await nutriBase.addUser(genderController? "Male" : "Female", heightController.text, weightController.text, ageController.text);
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);
+                  // await nutriBase.addUser(genderController? "Male" : "Female", heightController.text, weightController.text, ageController.text);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SetupWizard2(age: ageController.text, height: heightController.text, weight: weightController.text, gender: genderController? "Male" : "Female",)),
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
@@ -106,7 +110,7 @@ class _SetupWizardState extends State<SetupWizard> {
                       border: Border.all(color: Color(0xff454B60)),
                       borderRadius: BorderRadius.circular(5)
                   ),
-                  child: Center(child: Text("Submit", style: TextStyle(fontSize: 16, color: Colors.white),)),
+                  child: Center(child: Text("Next", style: TextStyle(fontSize: 16, color: Colors.white),)),
                 ),
               )
             ],
