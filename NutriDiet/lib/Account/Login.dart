@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           working = false;
                           error = true;
-                          message.text = "Error: ${returnMessage!}";
+                          message.text = "Invalid Email/Password";
                         });
                       }
                     }
@@ -175,17 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        SizedBox(height: 5,),
-        Row(
-          children: [
-            Spacer(), GestureDetector(
-              onTap: () {
-
-              },
-              child: Text("Forgot Password?", style: TextStyle(fontSize: 14, color: Color(0xff454B60)),)
-            ),
-          ],
-        )
+        SizedBox(height: 15,),
       ],
     );
   }

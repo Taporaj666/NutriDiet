@@ -121,28 +121,26 @@ class _KitchenState extends State<Kitchen> {
                     // height: 50,
                     child: Row(
                       children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(food[index][1],
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    color: Color(0xff3D4048),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400
-                                ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(food[index][1],
+                              style: TextStyle(
+                                color: Color(0xff3D4048),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400
                               ),
-                              Text("${food[index][2]} kCal",
-                                style: TextStyle(
-                                    color: Color(0xff3D4048),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w800
-                                ),
-                              )
-                            ],
-                          ),
+                            ),
+                            Text(food[index][2],
+                              style: TextStyle(
+                                  color: Color(0xff3D4048),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w800
+                              ),
+                            )
+                          ],
                         ),
+                        Spacer(),
                         Container(
                           height: 100,
                           width: 100,
