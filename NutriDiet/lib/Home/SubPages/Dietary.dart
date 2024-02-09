@@ -124,7 +124,7 @@ class Dietary extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          "Calory Graph",
+                          "Calorie Graph",
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w300

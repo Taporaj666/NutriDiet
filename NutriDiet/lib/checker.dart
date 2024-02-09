@@ -1,4 +1,5 @@
 import 'package:flutter/Material.dart';
+import 'package:nutridiet/Home/SubPages/Caterer.dart';
 
 import 'Admin/Home.dart';
 import 'BusinessLogic/Firebase.dart';
@@ -24,6 +25,9 @@ class _checkerState extends State<checker> {
     await Future.delayed(Duration(seconds: 1));
     if (FirebaseManager.user!.email! == "admin@nutridiet.com") {
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => AdminHomeScreen()), (route) => false);
+    }
+    else if (FirebaseManager.user!.email! == "caterer@nutridiet.com") {
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => Caterer()), (route) => false);
     }
     else {
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomeScreen()), (route) => false);

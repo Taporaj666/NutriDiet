@@ -83,6 +83,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return false;
   }
 
+  bool passwordValidityChecker(String password) {
+    // Check if the password contains alphabets
+    bool containsAlphabets = RegExp(r'[a-zA-Z]').hasMatch(password);
+
+    // Check if the password contains numbers
+    bool containsNumbers = RegExp(r'[0-9]').hasMatch(password);
+
+    // Check if the password contains special characters
+    bool containsSpecialChars =
+    RegExp(r'[!@#\$%^&*\(\)?><:]').hasMatch(password);
+
+    // Return true if all conditions are met
+    return containsAlphabets && containsNumbers && containsSpecialChars;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -138,22 +153,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextBox(password, "Password", passErrorController, passError, true),
                 SizedBox(height: 5,),
                 CustomTextBox(cpassword, "Confirm Password", cpassErrorController, cpassError, true),
-                Row(
-                  children: [
-                    Checkbox(
-                      isError: true,
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                    SizedBox(width: 10,),
-                    Text("I agree with the terms and conditions", style: !checkboxErrorController ? TextStyle(fontSize: 14, color: Color(0xff454B60), fontWeight: FontWeight.bold) : TextStyle(fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),),
-                  ],
-                ),
-                SizedBox(height: 10,),
+                // Row(
+                //   children: [
+                //     Checkbox(
+                //       isError: true,
+                //       value: isChecked,
+                //       onChanged: (bool? value) {
+                //         setState(() {
+                //           isChecked = value!;
+                //         });
+                //       },
+                //     ),
+                //     SizedBox(width: 10,),
+                //     Text("I agree with the terms and conditions", style: !checkboxErrorController ? TextStyle(fontSize: 14, color: Color(0xff454B60), fontWeight: FontWeight.bold) : TextStyle(fontSize: 14, color: Colors.red, fontWeight: FontWeight.bold),),
+                //   ],
+                // ),
+                // SizedBox(height: 10,),
                 Spacer(),
                 InkWell(
                   onTap: () async {
@@ -161,6 +176,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (password.text.length < 8) {
                         passErrorController = true;
                         passError = "Password must be 8 characters";
+                      }
+                      else if (!passwordValidityChecker(password.text)) {
+                        passErrorController = true;
+                        passError = "Password must contain characters and numbers";
                       }
                       else if (password.text != cpassword.text) {
                         cpassErrorController = true;

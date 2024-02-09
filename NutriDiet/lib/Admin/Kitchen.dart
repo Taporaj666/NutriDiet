@@ -39,12 +39,12 @@ class _KitchenState extends State<AdminKitchen> {
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              //   child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
+              // ),
               Spacer(),
               Text("Recipes Management", style: TextStyle(fontSize: 24, color: Color(0xff454B60)),),
               Spacer(),
@@ -70,14 +70,21 @@ class _KitchenState extends State<AdminKitchen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(food[index][1],
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    color: Color(0xff3D4048),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400
-                                ),
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(food[index][1],
+                                      // overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          color: Color(0xff3D4048),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+                              SizedBox(height: 5,),
                               Text("${food[index][2]} kCal",
                                 style: TextStyle(
                                     color: Color(0xff3D4048),
@@ -110,12 +117,12 @@ class _KitchenState extends State<AdminKitchen> {
                                 food.removeAt(index);
                               });
                               Fluttertoast.showToast(
-                                msg: "meals added!",
+                                msg: "Recipe Deleted!",
                               );
                             }
                             else {
                               Fluttertoast.showToast(
-                                msg: "meals added!",
+                                msg: "Error!",
                               );
                             }
                           },
