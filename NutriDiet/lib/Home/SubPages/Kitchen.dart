@@ -38,67 +38,67 @@ class _KitchenState extends State<Kitchen> {
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              //   child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
-              // ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
+              ),
               Spacer(),
               Text("Recipes", style: TextStyle(fontSize: 30, color: Color(0xff454B60)),),
               Spacer(),
             ],
           ),
         ),
-        // Padding(
-        //   padding: const EdgeInsets.all(20),
-        //   child: Row(
-        //     children: [
-        //       Expanded(
-        //         child: Container(
-        //           padding: EdgeInsets.all(15),
-        //           decoration: BoxDecoration(
-        //             border: Border.all(color: Color(0xff454B60)),
-        //             borderRadius: BorderRadius.circular(15)
-        //           ),
-        //           child: Row(
-        //             children: [
-        //               Expanded(
-        //                 child: TextField(
-        //                   obscureText: false,
-        //                   enableSuggestions: true,
-        //                   autocorrect: true,
-        //                   controller: inputController,
-        //                   style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
-        //                   decoration: new InputDecoration.collapsed(
-        //                     hintText: "Search",
-        //                     hintStyle: TextStyle(fontSize: 14, color: Color(0xff454B60)),
-        //                   ),
-        //                 ),
-        //               ),
-        //               GestureDetector(
-        //                   onTap: () async {
-        //
-        //                   },
-        //                   child: Icon(Icons.search, color: Color(0xff454B60),)
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //       SizedBox(width: 20,),
-        //       GestureDetector(
-        //           onTap: () async {
-        //             Navigator.push(
-        //               context,
-        //               MaterialPageRoute(builder: (context) => addRecipe()),
-        //             );
-        //           },
-        //           child: Icon(Icons.add_box_rounded, color: Color(0xff454B60), size: 72,)
-        //       ),
-        //     ],
-        //   ),
-        // ),
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xff454B60)),
+                    borderRadius: BorderRadius.circular(15)
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          obscureText: false,
+                          enableSuggestions: true,
+                          autocorrect: true,
+                          controller: inputController,
+                          style: TextStyle(fontSize: 14, color: Color(0xff454B60)),
+                          decoration: new InputDecoration.collapsed(
+                            hintText: "Search",
+                            hintStyle: TextStyle(fontSize: 14, color: Color(0xff454B60)),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                          onTap: () async {
+
+                          },
+                          child: Icon(Icons.search, color: Color(0xff454B60),)
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 20,),
+              GestureDetector(
+                  onTap: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => addRecipe()),
+                    );
+                  },
+                  child: Icon(Icons.add_box_rounded, color: Color(0xff454B60), size: 72,)
+              ),
+            ],
+          ),
+        ),
         isLoaded ? Expanded(
           child: ListView.builder(
               padding: const EdgeInsets.all(20),
@@ -108,7 +108,7 @@ class _KitchenState extends State<Kitchen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Recipe(title: food[index][1], ingredients: food[index][3], method: food[index][4], image: food[index][5], calories: food[index][2], ID: food[index][0], nutrients: food[index][6],)),
+                      MaterialPageRoute(builder: (context) => Recipe(title: food[index][1], ingredients: food[index][3], method: food[index][4], image: food[index][5], calories: food[index][2])),
                     );
                   },
                   child: Container(
@@ -125,32 +125,24 @@ class _KitchenState extends State<Kitchen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: Text(food[index][1],
-                                      // overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: Color(0xff3D4048),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              Text(food[index][1],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Color(0xff3D4048),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400
+                                ),
                               ),
-                              SizedBox(height: 5,),
                               Text("${food[index][2]} kCal",
                                 style: TextStyle(
                                     color: Color(0xff3D4048),
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w800
                                 ),
                               )
                             ],
                           ),
                         ),
-                        SizedBox(width: 5,),
                         Container(
                           height: 100,
                           width: 100,
@@ -175,24 +167,5 @@ class _KitchenState extends State<Kitchen> {
         )  : CircularProgressIndicator(color: Color(0xff454B60),),
       ],
     );
-  }
-
-  imageChecker(String imageUrl) {
-    if (imageUrl.isEmpty) {
-
-    }
-    else {
-      return Image.network(imageUrl,
-        fit: BoxFit.fitHeight,
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return child;
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.grey[400],
-            ),
-          );
-        },
-      );
-    }
   }
 }

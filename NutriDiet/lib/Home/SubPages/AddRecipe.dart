@@ -15,7 +15,6 @@ class _addRecipeState extends State<addRecipe> {
   TextEditingController methodController = new TextEditingController();
   TextEditingController imageController = new TextEditingController();
   TextEditingController caloriesController = new TextEditingController();
-  TextEditingController nutrientController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +46,11 @@ class _addRecipeState extends State<addRecipe> {
               SizedBox(height: 20,),
               inputBox("Method of Recipe", methodController, "E.g.\n1. Prepare the over at 50 degrees\n2. Add oil to flour", 10, false),
               SizedBox(height: 20,),
-              inputBox("Nutrients", nutrientController, "E.g.\n2 g Fat\n45 g Cholesterol", 10, false),
-              SizedBox(height: 20,),
               inputBox("Image (link)", imageController, "E.g. website.com/chicken.png", 1, false),
               SizedBox(height: 40,),
               GestureDetector(
                 onTap: () async {
-                  await nutriBase.addRecipe(titleController.text, ingredientsController.text, methodController.text, imageController.text, caloriesController.text, nutrientController.text);
+                  await nutriBase.addRecipe(titleController.text, ingredientsController.text, methodController.text, imageController.text, caloriesController.text);
                   Navigator.pop(context);
                 },
                 child: Container(
