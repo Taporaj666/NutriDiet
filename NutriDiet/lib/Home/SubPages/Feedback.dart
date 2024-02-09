@@ -13,10 +13,7 @@ class FeedBack extends StatefulWidget {
 class _FeedBackState extends State<FeedBack> {
   TextEditingController email = new TextEditingController();
   TextEditingController feedback = new TextEditingController();
-  TextEditingController recipeID = new TextEditingController();
 
-  int rating = 0;
-  
   @override
   void initState() {
     // TODO: implement initState
@@ -52,23 +49,6 @@ class _FeedBackState extends State<FeedBack> {
                 SizedBox(height: 50,),
                 inputBox("Email", email, "Loading...", 1, true),
                 SizedBox(height: 30,),
-                inputBox("Recipe Name", recipeID, "Enter Recipe Name", 1, false),
-                SizedBox(height: 30,),
-                Text("Rating", style: TextStyle(fontSize: 16, color: Color(0xff454B60)),),
-                SizedBox(height: 20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(width: 20,),
-                    ratingStar(1),
-                    ratingStar(2),
-                    ratingStar(3),
-                    ratingStar(4),
-                    ratingStar(5),
-                    SizedBox(width: 20,),
-                  ],
-                ),
-                SizedBox(height: 30,),
                 inputBox("Feedback", feedback, "Write Something to Forward", 10, false),
                 SizedBox(height: 20,),
                 Row(
@@ -99,29 +79,6 @@ class _FeedBackState extends State<FeedBack> {
         ),
       ),
     );
-  }
-
-  ratingStar(int designatedValue) {
-    if (designatedValue <= rating) {
-      return GestureDetector(
-        onTap: () {
-          setState(() {
-            rating = designatedValue;
-          });
-        },
-          child: Icon(Icons.star, color: Colors.orangeAccent, size: 48,)
-      );
-    }
-    else {
-      return GestureDetector(
-          onTap: () {
-            setState(() {
-              rating = designatedValue;
-            });
-          },
-          child: Icon(Icons.star_border, color: Colors.grey, size: 48,)
-      );
-    }
   }
 
   inputBox(String title, TextEditingController tempController, String hintText, int maxLines, bool kbType) {

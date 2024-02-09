@@ -149,7 +149,7 @@ class _CartState extends State<Cart> {
                                       fontWeight: FontWeight.w400
                                   ),
                                 ),
-                                Text( cart[index][3].toString() + " USD",
+                                Text( buyablefood[index][3].toString() + " USD",
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: Color(0xff3D4048),

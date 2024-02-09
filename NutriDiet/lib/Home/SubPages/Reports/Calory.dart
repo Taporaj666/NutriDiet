@@ -1,12 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/Material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:nutridiet/BusinessLogic/Firestore.dart';
-
-import '../../../Account/SetupWizard.dart';
-import '../../../BusinessLogic/Firebase.dart';
-import '../SubHome.dart';
-import 'BiasGoals.dart';
 
 class GraphPage extends StatefulWidget {
   const GraphPage({super.key});
@@ -17,33 +11,20 @@ class GraphPage extends StatefulWidget {
 
 class _GraphPageState extends State<GraphPage> {
 
+  @override
+  void initState() {
+    loadCalories();
+    super.initState();
+  }
+
   double maxCal = 0;
 
   List<_ChartData> caloriesData = List.generate(30, (index) => _ChartData(index.toDouble(), 0));
-  List<_ChartData> randomData = List.generate(30, (index) => _ChartData(index.toDouble(), 0));
   double netTotalCalories = 0;
-
-  late String workout = "";
-
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  loadData() async {
-    print("Recommended: " + actualUserBMR);
-
-    loadCalories();
-
-    setState(() {
-      randomData = List.generate(30, (index) => _ChartData(index.toDouble(), double.parse(actualUserBMR)));
-    });
-  }
 
   void loadCalories() async {
     caloriesData = [];
-    var rawData = await FirebaseFirestore.instance.collection('intake').where('userID', isEqualTo: FirebaseManager.user!.uid!).orderBy("date", descending: false).limit(30).get();
+    var rawData = await FirebaseFirestore.instance.collection('intake').orderBy("date", descending: false).limit(30).get();
     print(rawData.size);
 
     for (int i = 0; i < 30; i++) {
@@ -62,10 +43,6 @@ class _GraphPageState extends State<GraphPage> {
         }
       }
 
-      if (double.parse(biasGenerator(workoutCheck(workout))) > maxCal) {
-        maxCal = double.parse(actualUserBMR);
-      }
-
       caloriesData.add(_ChartData(i.toDouble(), totalCalories));
     }
 
@@ -80,25 +57,9 @@ class _GraphPageState extends State<GraphPage> {
     });
   }
 
-  workoutCheck(String goal) {
-    if (goal == "")
-      return 1.0;
-    if (goal == "Sedentary Exercise")
-      return 1.2;
-    if (goal == "Light Exercise (1-2 Days a week)")
-      return 1.375;
-    if (goal == "Good Exercise (3-5 Days a week)")
-      return 1.55;
-    if (goal == "Hard Exercise (6-7 Days a week)")
-      return 1.725;
-    if (goal == "Extreme Exercise (2x Training)")
-      return 1.9;
-  }
-
   @override
   void dispose() {
     caloriesData!.clear();
-    randomData!.clear();
     super.dispose();
   }
 
@@ -119,7 +80,7 @@ class _GraphPageState extends State<GraphPage> {
                         child: Icon(Icons.arrow_back)
                     ),
                     Text(
-                      " Calorie Tracker",
+                      " Calory Tracker",
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w500
@@ -136,41 +97,8 @@ class _GraphPageState extends State<GraphPage> {
                     key: ValueKey(1),
                   ),
                 ),
-                SizedBox(height: 20,),
-                Row(
-                  children: [
-                    Icon(Icons.circle, color: Colors.blue, size: 12,),
-                    SizedBox(width: 10,),
-                    Text("Actual Calorie Intake",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Color(0xff3D4048),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400
-                      ),
-                    ),
-                    Spacer(),
-                    Icon(Icons.circle, color: Colors.red, size: 12,),
-                    SizedBox(width: 10,),
-                    Text("Recommended Calorie Intake",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Color(0xff3D4048),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400
-                      ),
-                    ),
-                  ],
-                ),
                 SizedBox(height: 50,),
-                Divider(),
-                SizedBox(height: 20,),
-                textRow("Total Calories Consumed:", netTotalCalories.toString(), 18),
-                SizedBox(height: 20,),
-                Divider(),
-                SizedBox(height: 20,),
-                textRow("Monthly Calorie Goal:", (double.parse(actualUserBMR) * 30).toStringAsFixed(1), 18),
-                // showgoals(),
+                textRow("Total Calories:", netTotalCalories.toString(), 24),
               ],
             )
         ),
@@ -214,7 +142,6 @@ class _GraphPageState extends State<GraphPage> {
           interval: 2,
           minimum: 0,
           maximum: 29,
-          isInversed: true,
           majorGridLines: MajorGridLines(width: 0)),
       primaryYAxis: NumericAxis(
           minimum: 0,
@@ -238,14 +165,6 @@ class _GraphPageState extends State<GraphPage> {
           // width: 2,
           name: 'Calories',
           markerSettings: const MarkerSettings(isVisible: true)),
-      LineSeries<_ChartData, num>(
-          animationDuration: 2500,
-          dataSource: randomData!,
-          xValueMapper: (_ChartData sales, _) => sales.x,
-          yValueMapper: (_ChartData sales, _) => sales.y,
-          // width: 2,
-          name: 'Calories',
-          markerSettings: const MarkerSettings(isVisible: false)),
     ];
   }
 }

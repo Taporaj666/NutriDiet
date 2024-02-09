@@ -41,12 +41,12 @@ class _KitchenState extends State<AdminItems> {
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              //   child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
-              // ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
+              ),
               Spacer(),
               Text("Items Management", style: TextStyle(fontSize: 24, color: Color(0xff454B60)),),
               Spacer(),
@@ -212,12 +212,12 @@ class _KitchenState extends State<AdminItems> {
                                     food.removeAt(index);
                                   });
                                   Fluttertoast.showToast(
-                                    msg: "Deleted Item!",
+                                    msg: "meals added!",
                                   );
                                 }
                                 else {
                                   Fluttertoast.showToast(
-                                    msg: "Error!",
+                                    msg: "meals added!",
                                   );
                                 }
                               },

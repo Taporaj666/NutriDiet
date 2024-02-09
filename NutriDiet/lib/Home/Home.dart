@@ -7,7 +7,7 @@ import 'package:nutridiet/Home/SubPages/Profile.dart';
 import 'package:nutridiet/Home/SubPages/Recipe.dart';
 
 import 'SubPages/AddRecipe.dart';
-import 'SubPages/FoodPlanner.dart';
+import 'SubPages/Search.dart';
 import 'SubPages/Shopping.dart';
 import 'SubPages/SubHome.dart';
 
@@ -54,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: new Icon(Icons.shopping_cart_outlined),
-                  label: 'Purchase',
+                  icon: new Icon(Icons.search),
+                  label: 'Search',
                 ),
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.cookie_outlined),

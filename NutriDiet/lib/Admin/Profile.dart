@@ -56,12 +56,12 @@ class _ProfileState extends State<AdminProfile> {
           children: [
             Row(
               children: [
-                // GestureDetector(
-                //   onTap: () {
-                //     Navigator.pop(context);
-                //   },
-                //   child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
-                // ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
+                ),
                 Spacer(),
                 Text("Profile", style: TextStyle(fontSize: 30, color: Color(0xff454B60)),),
                 Spacer(),
@@ -93,51 +93,51 @@ class _ProfileState extends State<AdminProfile> {
               ],
             ),
             SizedBox(height: 40,),
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Text("User Details", style: TextStyle(fontSize: 16, color: Color(0xff454B60)),),
-            //     SizedBox(height: 20,),
-            //     editField("Gender", genderController, false),
-            //     SizedBox(height: 10,),
-            //     editField("Age", ageController, true),
-            //     SizedBox(height: 10,),
-            //     editField("Height", heightController, true),
-            //     SizedBox(height: 10,),
-            //     editField("Weight", weightController, true),
-            //   ],
-            // ),
-            // SizedBox(height: 40,),
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: GestureDetector(
-            //         onTap: () async {
-            //           Navigator.push(
-            //             context,
-            //             MaterialPageRoute(builder: (context) => TermsConditions()),
-            //           );
-            //         },
-            //         child: Container(
-            //             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-            //             decoration: BoxDecoration(
-            //               // color: Colors.white,
-            //                 border: Border.all(color: Color(0xff454B60)),
-            //                 borderRadius: BorderRadius.circular(5)
-            //             ),
-            //             child: Row(
-            //               children: [
-            //                 Text("Terms and Conditions", style: TextStyle(fontSize: 16, color: Colors.blueGrey),),
-            //                 Spacer(),
-            //                 Icon(Icons.open_in_new, color: Colors.blueGrey),
-            //               ],
-            //             )
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // SizedBox(height: 40,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("User Details", style: TextStyle(fontSize: 16, color: Color(0xff454B60)),),
+                SizedBox(height: 20,),
+                editField("Gender", genderController, false),
+                SizedBox(height: 10,),
+                editField("Age", ageController, true),
+                SizedBox(height: 10,),
+                editField("Height", heightController, true),
+                SizedBox(height: 10,),
+                editField("Weight", weightController, true),
+              ],
+            ),
+            SizedBox(height: 40,),
+            Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TermsConditions()),
+                      );
+                    },
+                    child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                        decoration: BoxDecoration(
+                          // color: Colors.white,
+                            border: Border.all(color: Color(0xff454B60)),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: Row(
+                          children: [
+                            Text("Terms and Conditions", style: TextStyle(fontSize: 16, color: Colors.blueGrey),),
+                            Spacer(),
+                            Icon(Icons.open_in_new, color: Colors.blueGrey),
+                          ],
+                        )
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 40,),
             Row(
               children: [
                 Spacer(),

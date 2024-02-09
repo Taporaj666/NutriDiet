@@ -1,5 +1,4 @@
 import 'package:flutter/Material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nutridiet/Account/SetupPart2.dart';
 import 'package:nutridiet/BusinessLogic/FireStore.dart';
 
@@ -46,11 +45,9 @@ class _SetupWizardState extends State<SetupWizard> {
                 ],
               ),
               SizedBox(height: 40,),
-              textRow("Name: ", nameController.text, 16, ''),
-              // inputBox("Name", nameController, "E.g Dave", true),
+              inputBox("Name", nameController, "E.g Dave", true),
               SizedBox(height: 20,),
-              textRow("Email: ", emailController.text, 16, ''),
-              // inputBox("Email", emailController, "E.g. Dave@website.com", true),
+              inputBox("Email", emailController, "E.g. Dave@website.com", true),
               SizedBox(height: 20,),
               Row(
                 children: [
@@ -92,7 +89,7 @@ class _SetupWizardState extends State<SetupWizard> {
                 ],
               ),
               SizedBox(height: 20,),
-              secondInputBox("Height", "Centimeters", heightController),
+              secondInputBox("Height", "Meters", heightController),
               SizedBox(height: 20,),
               secondInputBox("Weight", "Kgs", weightController),
               SizedBox(height: 20,),
@@ -101,31 +98,10 @@ class _SetupWizardState extends State<SetupWizard> {
               GestureDetector(
                 onTap: () async {
                   // await nutriBase.addUser(genderController? "Male" : "Female", heightController.text, weightController.text, ageController.text);
-                  if (!ageController.text.isEmpty) {
-                    if (!heightController.text.isEmpty) {
-                      if (!weightController.text.isEmpty) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SetupWizard2(age: ageController.text, height: heightController.text, weight: weightController.text, gender: genderController? "Male" : "Female",)),
-                        );
-                      }
-                      else {
-                        Fluttertoast.showToast(
-                          msg: "Please fill all fields",
-                        );
-                      }
-                    }
-                    else {
-                      Fluttertoast.showToast(
-                        msg: "Please fill all fields",
-                      );
-                    }
-                  }
-                  else {
-                    Fluttertoast.showToast(
-                      msg: "Please fill all fields",
-                    );
-                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SetupWizard2(age: ageController.text, height: heightController.text, weight: weightController.text, gender: genderController? "Male" : "Female",)),
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
@@ -141,38 +117,6 @@ class _SetupWizardState extends State<SetupWizard> {
           ),
         ),
       ),
-    );
-  }
-
-  textRow(String title, String value, double size, String units) {
-    return Row(
-      children: [
-        Text(title,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: Color(0xff3D4048),
-              fontSize: size,
-              fontWeight: FontWeight.w400
-          ),
-        ),
-        Spacer(),
-        Text(value,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: Color(0xff3D4048),
-              fontSize: size,
-              fontWeight: FontWeight.w800
-          ),
-        ),
-        Text(" $units",
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: Color(0xff3D4048),
-              fontSize: size,
-              fontWeight: FontWeight.w400
-          ),
-        ),
-      ],
     );
   }
 
