@@ -43,14 +43,6 @@ dependencies:
   firebase_core: ^2.16.0
   firebase_database: ^10.2.4
   firebase_storage: ^11.2.5
-  google_vision: ^1.1.1+2
-  googleapis: ^12.0.0
-  image_cropper: ^5.0.1
-  image_picker: ^1.0.5
-  google_mlkit_commons: ^0.6.1
-  google_mlkit_image_labeling: ^0.10.0
-  path_provider: ^2.1.1
-  syncfusion_flutter_charts: ^24.1.44+1
 
 dev_dependencies:
   flutter_test:
@@ -78,7 +70,6 @@ flutter:
 
   assets:
     - assets/
-    - assets/ml/object_labeler.tflite
     - assets/logo.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see

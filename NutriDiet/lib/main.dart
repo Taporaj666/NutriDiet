@@ -6,14 +6,12 @@ import 'package:nutridiet/Account/Login.dart';
 import 'package:nutridiet/BusinessLogic/Firebase.dart';
 import 'package:nutridiet/Home/Home.dart';
 
-import 'checker.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   if (FirebaseAuth.instance.currentUser != null) {
-    runApp(const MyApp(forwarder: checker()));
+    runApp(const MyApp(forwarder: HomeScreen()));
   } else {
     runApp(const MyApp(forwarder: LoginScreen()));
   }
