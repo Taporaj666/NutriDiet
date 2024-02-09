@@ -42,12 +42,12 @@ class _ShoppingState extends State<Shopping> {
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              //   child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
+              // ),
               Spacer(),
               Text("Buy Food", style: TextStyle(fontSize: 30, color: Color(0xff454B60)),),
               Spacer(),

@@ -92,7 +92,7 @@ class _PaymentState extends State<Payment> {
                             SizedBox(width: 10,),
                             Expanded(
                               flex: 1,
-                              child: inputBox("Expiry", name, "XX/XXXX", false, true),
+                              child: inputBox("Expiry", expiry, "XX/XXXX", false, true),
                             ),
                           ],
                         ),
@@ -101,12 +101,12 @@ class _PaymentState extends State<Payment> {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: inputBox("Card Number", name, "XXXX XXXX XXXX XXXX", false, true),
+                              child: inputBox("Card Number", card, "XXXX XXXX XXXX XXXX", false, true),
                             ),
                             SizedBox(width: 10,),
                             Expanded(
                               flex: 1,
-                              child: inputBox("CVV", name, "XXX", false, false),
+                              child: inputBox("CVV", cvv, "XXX", false, true),
                             ),
                           ],
                         )

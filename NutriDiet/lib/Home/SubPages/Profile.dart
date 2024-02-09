@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/Material.dart';
+import 'package:nutridiet/Account/UpdateSecondary.dart';
 import 'package:nutridiet/BusinessLogic/FireStore.dart';
 import 'package:nutridiet/Home/SubPages/TermsConditions.dart';
 
 import '../../Account/Login.dart';
 import '../../Account/SetupWizard.dart';
 import '../../BusinessLogic/Firebase.dart';
+import 'SubHome.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -20,6 +22,8 @@ class _ProfileState extends State<Profile> {
   TextEditingController ageController = new TextEditingController();
   TextEditingController heightController = new TextEditingController();
   TextEditingController weightController = new TextEditingController();
+  TextEditingController allergyController = new TextEditingController();
+  TextEditingController workoutController = new TextEditingController();
 
   @override
   void initState() {
@@ -29,6 +33,7 @@ class _ProfileState extends State<Profile> {
     ageController.text = "Loading...";
     heightController.text = "Loading...";
     weightController.text = "Loading...";
+    allergyController.text = "Loading...";
     loadData();
   }
 
@@ -45,6 +50,10 @@ class _ProfileState extends State<Profile> {
     ageController.text = userData[0].data()["age"].toString();
     heightController.text = userData[0].data()["height"].toString();
     weightController.text = userData[0].data()["weight"].toString();
+    allergyController.text = userData[0].data()["allergy"].toString();
+    setState(() {
+      workoutController.text = userData[0].data()["workout"].toString();
+    });
   }
 
   @override
@@ -56,12 +65,12 @@ class _ProfileState extends State<Profile> {
           children: [
             Row(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.pop(context);
+                //   },
+                //   child: Icon(Icons.arrow_back, color: Color(0xff454B60)),
+                // ),
                 Spacer(),
                 Text("Profile", style: TextStyle(fontSize: 30, color: Color(0xff454B60)),),
                 Spacer(),
@@ -97,14 +106,116 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("User Details", style: TextStyle(fontSize: 16, color: Color(0xff454B60)),),
+                SizedBox(height: 30,),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    gradient: LinearGradient(
+                      colors: [Colors.pink, Colors.pink[200]!],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Your BMR: ",
+                        style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.w300
+                        ),
+                      ),
+                      Text(
+                        actualUserBMR,
+                        style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 30,),
                 SizedBox(height: 20,),
-                editField("Gender", genderController, false),
+                editField("Gender", genderController, false, true),
                 SizedBox(height: 10,),
-                editField("Age", ageController, true),
+                editField("Age", ageController, true, false),
                 SizedBox(height: 10,),
-                editField("Height", heightController, true),
+                editField("Height", heightController, true, false),
                 SizedBox(height: 10,),
-                editField("Weight", weightController, true),
+                editField("Weight", weightController, true, false),
+                SizedBox(height: 10,),
+                editField("Allergy", allergyController, false, false),
+                // SizedBox(height: 10,),
+                // editField("Workout", workoutController, false, true),
+              ],
+            ),
+            SizedBox(height: 40,),
+            Row(
+              children: [
+                // Spacer(),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const UpdateSecondary()),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      decoration: BoxDecoration(
+                          color: Color(0xff454B60),
+                          border: Border.all(color: Color(0xff454B60)),
+                          borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Center(child: Text("Edit Others", style: TextStyle(fontSize: 16, color: Colors.white),)),
+                    ),
+                  ),
+                ),
+                // Spacer(),
+              ],
+            ),
+            SizedBox(height: 40,),
+            Row(
+              children: [
+                // Spacer(),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      nutriBase.updateUser(FirebaseManager.user!.uid!, weightController.text, heightController.text, ageController.text, allergyController.text);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      decoration: BoxDecoration(
+                          color: Color(0xff454B60),
+                          border: Border.all(color: Color(0xff454B60)),
+                          borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Center(child: Text("Update", style: TextStyle(fontSize: 16, color: Colors.white),)),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 40,),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      await FirebaseManager.logoutAccount();
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      decoration: BoxDecoration(
+                          color: Color(0xff454B60),
+                          border: Border.all(color: Color(0xff454B60)),
+                          borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Center(child: Text("Logout", style: TextStyle(fontSize: 16, color: Colors.white),)),
+                    ),
+                  ),
+                ),
+                // Spacer(),
               ],
             ),
             SizedBox(height: 40,),
@@ -119,53 +230,31 @@ class _ProfileState extends State<Profile> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                      decoration: BoxDecoration(
+                        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                        decoration: BoxDecoration(
                           // color: Colors.white,
-                          border: Border.all(color: Color(0xff454B60)),
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Row(
-                        children: [
-                          Text("Terms and Conditions", style: TextStyle(fontSize: 16, color: Colors.blueGrey),),
-                          Spacer(),
-                          Icon(Icons.open_in_new, color: Colors.blueGrey),
-                        ],
-                      )
+                            border: Border.all(color: Color(0xff454B60)),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: Row(
+                          children: [
+                            Text("Terms and Conditions", style: TextStyle(fontSize: 16, color: Colors.blueGrey),),
+                            Spacer(),
+                            Icon(Icons.open_in_new, color: Colors.blueGrey),
+                          ],
+                        )
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 40,),
-            Row(
-              children: [
-                Spacer(),
-                GestureDetector(
-                  onTap: () async {
-                    await FirebaseManager.logoutAccount();
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                    decoration: BoxDecoration(
-                        color: Color(0xff454B60),
-                        border: Border.all(color: Color(0xff454B60)),
-                        borderRadius: BorderRadius.circular(5)
-                    ),
-                    child: Text("Logout", style: TextStyle(fontSize: 16, color: Colors.white),),
-                  ),
-                ),
-                Spacer(),
-              ],
-            )
           ],
         ),
       ),
     );
   }
 
-  editField(String title, TextEditingController fieldController, bool isNumeric) {
+  editField(String title, TextEditingController fieldController, bool isNumeric, bool readOnly) {
     return Row(
       children: [
         SizedBox(
@@ -181,7 +270,7 @@ class _ProfileState extends State<Profile> {
                 borderRadius: BorderRadius.circular(15)
             ),
             child: TextField(
-              readOnly: true,
+              readOnly: readOnly,
               keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
               obscureText: false,
               enableSuggestions: true,

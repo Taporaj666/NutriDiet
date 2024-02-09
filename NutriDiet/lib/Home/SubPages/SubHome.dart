@@ -4,20 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:nutridiet/Home/SubPages/Dietary.dart';
 import 'package:nutridiet/Home/SubPages/Feedback.dart';
 import 'package:nutridiet/Home/SubPages/Logging.dart';
-import 'package:nutridiet/Home/SubPages/Planner.dart';
+import 'package:nutridiet/Home/SubPages/FoodPlanner.dart';
 
 import '../../Account/SetupWizard.dart';
 import '../../BusinessLogic/Firebase.dart';
 import 'AddRecipe.dart';
 import 'Cart.dart';
-import 'Search.dart';
+import 'FoodPlanner.dart';
 
 bool userGender = true;
 double userAge = 0;
 double userHeight = 0;
 double userWeight = 0;
 double userBMR = 0;
+String actualUserBMR = "";
 String userGoal = "";
+String userHealth = "";
+String userExercise = "";
 
 class subHome extends StatefulWidget {
   const subHome({super.key});
@@ -27,8 +30,6 @@ class subHome extends StatefulWidget {
 }
 
 class _subHomeState extends State<subHome> {
-
-  String BMI = "---";
 
   @override
   void initState() {
@@ -52,10 +53,42 @@ class _subHomeState extends State<subHome> {
     userHeight = double.parse(userData[0].data()["height"]);
     userWeight = double.parse(userData[0].data()["weight"]);
     userGoal = userData[0].data()["goal"];
+    userHealth = userData[0].data()["health_issue"];
+    userExercise = userData[0].data()["workout"];
+    String userWorkout = userData[0].data()["workout"];
     userBMR = nutriBase.calculateBMR(userGender, userWeight, userHeight, userAge);
-    setState(() {
-      BMI = userBMR.toStringAsFixed(1);
-    });
+    actualUserBMR = biasGenerator(workoutCheck(userWorkout), userGoal);
+  }
+
+  biasGenerator(double bias, String goal) {
+    double weightedBMR = userBMR * bias;
+
+    if (goal == "Gain") {
+      weightedBMR += 500;
+    }
+    else if (goal == "Lose") {
+      weightedBMR -= 500;
+    }
+    else if (goal == "Maintain") {
+      weightedBMR += 0;
+    }
+
+    return weightedBMR.toStringAsFixed(1);
+  }
+
+  workoutCheck(String goal) {
+    if (goal == "")
+      return 1.0;
+    if (goal == "Sedentary Exercise")
+      return 1.2;
+    if (goal == "Light Exercise (1-2 Days a week)")
+      return 1.375;
+    if (goal == "Good Exercise (3-5 Days a week)")
+      return 1.55;
+    if (goal == "Hard Exercise (6-7 Days a week)")
+      return 1.725;
+    if (goal == "Extreme Exercise (2x Training)")
+      return 1.9;
   }
 
   @override
@@ -84,36 +117,20 @@ class _subHomeState extends State<subHome> {
               ],
             ),
             SizedBox(height: 50,),
-            Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: LinearGradient(
-                  colors: [Colors.pink, Colors.pink[200]!],
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                ),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    "Your BMR: ",
+            Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    "NutriDiet - One Stop App for Healthy Recipe",
                     style: TextStyle(
-                        fontSize: 36,
+                        fontSize: 24,
                         fontWeight: FontWeight.w300
                     ),
                   ),
-                  Text(
-                    BMI,
-                    style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w600
-                    ),
-                  ),
-                ],
-              ),
+                )
+              ],
             ),
-            SizedBox(height: 30,),
+            SizedBox(height: 50,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +140,7 @@ class _subHomeState extends State<subHome> {
                 ),
                 SizedBox(width: 30,),
                 Expanded(
-                  child: menuBox("assets/plan.jpg", "Meal Planning", "Effortlessly plan your meals for success with our Meal Planning feature.", searchPage()),
+                  child: menuBox("assets/plan.jpg", "Meal Planning", "Effortlessly plan your meals for success with our Meal Planning feature.", FoodPlanner()),
                 )
               ],
             ),
